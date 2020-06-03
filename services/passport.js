@@ -24,6 +24,8 @@ passport.use(
       callbackURL: '/auth/google/callback',
       proxy: true,
     },
+    //       // make a query to find id that matched(asysn operation, reach to Mongo
+    //       // database, then we get a promise so chain to a .then()
     async (accessToken, refreshToken, profile, done) => {
       const existingUser = await User.findOne({ googleId: profile.id });
 
@@ -36,20 +38,3 @@ passport.use(
     }
   )
 );
-//     (accessToken, refreshToken, profile, done) => {
-//       // make a query to find id that matched(asysn operation, reach to Mongo
-//       // database, then we get a promise so chain to a .then()
-//       User.findOne({ googleId: profile.id }).then((existingUser) => {
-//         if (exsitingUser) {
-//           //already have a record with the id
-//           done(null, existingUser);
-//         } else {
-//           // we don't have a user record with the user
-//           new User({ googleId: profile.id })
-//             .save()
-//             .then((user) => done(null, user));
-//         }
-//       });
-//     }
-//   )
-// );
